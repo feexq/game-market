@@ -1,6 +1,6 @@
 # Game Market
 
-Game Market is a **Steam-inspired backend service** that manages the complete lifecycle of digital game sales — from intuitive catalog browsing to secure order placement and automated license-key activation. Built with **Spring Boot 3**, the system features **AOP-driven feature toggles** and **OAuth 2.0 (GitHub-only)** security, ensuring scalability through **Liquibase** migrations and **Testcontainers**-backed reliability **(external service mock)**.
+Game Market is a **Steam-inspired backend service** that manages the complete lifecycle of digital game sales — from intuitive catalog browsing to order placement and automated license-key activation **(external service mock)**. Built with **Spring Boot 3**, the system features **AOP-driven feature toggles**, ensuring scalability through **Liquibase** migrations and **Testcontainers**-backed reliability.
 
 ![Java 17](https://img.shields.io/badge/Java-17-orange?logo=openjdk)
 ![Spring Boot 3.3](https://img.shields.io/badge/Spring%20Boot-3.3-6DB33F?logo=springboot)
@@ -10,7 +10,7 @@ Game Market is a **Steam-inspired backend service** that manages the complete li
 ## ⭐ Key Features
 
 - **Dynamic AOP Toggles** — Real-time control over endpoints (e.g., `/sale`) via custom annotations.
-- **Secure GitHub Auth** — Integrated OAuth 2.0 flow with JWT-based protection **(no local passwords)**.
+- **GitHub Auth** — Integrated OAuth 2.0 flow with JWT-based protection **(no local passwords)**.
 - **Automated Key Activation** — Seamless integration with downstream services **(WireMock stubs)**.
 - **Catalog Lifecycle** — Managed products, customers, and orders with automated schema evolution.
 - **Production-Ready Infra** — Full Docker environment with PostgreSQL, WireMock, and JSON logging.
@@ -68,6 +68,8 @@ Game Market is a **Steam-inspired backend service** that manages the complete li
 <details>
 <summary><b>View common curl commands</b></summary>
 
+All endpoints are available without authentication for demo purposes.
+
 ### Create Product
 ```bash
 curl -X POST http://localhost:8080/api/v1/products \
@@ -75,7 +77,7 @@ curl -X POST http://localhost:8080/api/v1/products \
   -d '{ "title": "Hades", "price": 24.99, "developer": "Supergiant Games" }'
 ```
 
-### Place Order (requires Auth)
+### Place Order
 ```bash
 curl -X POST http://localhost:8080/api/v1/orders/cust-ref/cart-id \
   -H "Authorization: Bearer <token>" \
