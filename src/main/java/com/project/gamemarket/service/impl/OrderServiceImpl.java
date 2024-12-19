@@ -86,7 +86,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    @PreAuthorize("hasAnyRole('ADMIN', 'DELIVERY')")
+    // @PreAuthorize("hasAnyRole('ADMIN', 'DELIVERY')")
     @Transactional(readOnly = true)
     public List<Order> getAllOrders() {
         return orderRepository.findAllCustom().stream()
@@ -96,7 +96,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    @PreAuthorize("hasRole('ADMIN')")
+    // @PreAuthorize("hasRole('ADMIN')")
     public void deleteOrder(String cartId) {
         try {
             orderRepository.deleteByNaturalId(cartId);

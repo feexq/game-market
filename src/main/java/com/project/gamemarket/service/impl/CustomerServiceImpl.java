@@ -31,7 +31,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     @Transactional(readOnly = true)
-    @PreAuthorize("hasRole('ADMIN')")
+    // @PreAuthorize("hasRole('ADMIN')")
     public List<CustomerDetails> getAllCustomersDetails() {
         return customDetailsMapper.toCustomerDetailsList(customerRepository.findAll());
     }
@@ -46,7 +46,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     @Transactional
-    @PreAuthorize("hasRole('ADMIN')")
+    // @PreAuthorize("hasRole('ADMIN')")
     public CustomerDetails createCustomer(CustomerDetails customerDetails) {
         CustomerEntity customerEntity = customDetailsMapper.toCustomerEntity(customerDetails);
         if (customerRepository.existsByEmail(customerEntity.getEmail()) ||
@@ -63,7 +63,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     @Transactional
-    @PreAuthorize("hasRole('ADMIN')")
+    // @PreAuthorize("hasRole('ADMIN')")
     public void deleteCustomer(UUID customerReference) {
         try {
             customerRepository.deleteByNaturalId(customerReference);

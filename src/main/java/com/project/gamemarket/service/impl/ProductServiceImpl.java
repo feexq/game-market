@@ -35,7 +35,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    @PreAuthorize("hasRole('ADMIN')")
+    // @PreAuthorize("hasRole('ADMIN')")
     public ProductDetails addProduct(ProductDetails product) {
         if (productRepository.existsByTitleIgnoreCase(product.getTitle())) {
             throw new TitleAlreadyExistsException(product.getTitle());
@@ -50,7 +50,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    @PreAuthorize("hasRole('ADMIN')")
+    // @PreAuthorize("hasRole('ADMIN')")
     public ProductDetails updateProduct(ProductDetails product) {
         ProductEntity existingProduct = productRepository.findById(product.getId())
                 .orElseThrow(() -> new ProductNotFoundException(product.getId()));
@@ -79,7 +79,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    @PreAuthorize("hasRole('ADMIN')")
+    // @PreAuthorize("hasRole('ADMIN')")
     public void deleteProduct(Long id) {
         try {
             productRepository.deleteById(id);

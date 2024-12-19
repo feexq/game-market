@@ -36,7 +36,8 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .csrf(CsrfConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(authorize -> authorize.requestMatchers(CUSTOMER_V1_API).authenticated())
+                // .authorizeHttpRequests(authorize -> authorize.requestMatchers(CUSTOMER_V1_API).authenticated())
+                .authorizeHttpRequests(authorize -> authorize.requestMatchers(CUSTOMER_V1_API).permitAll())
                 .oauth2ResourceServer(oAuth2 -> oAuth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())));
 
         return http.build();
@@ -51,7 +52,8 @@ public class SecurityConfig {
                 .csrf(CsrfConfigurer::disable)
                 .addFilterBefore(new SecurityFilter(decoder), UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(authorize -> authorize.requestMatchers(antMatcher(ORDER_V1_API)).authenticated())
+                // .authorizeHttpRequests(authorize -> authorize.requestMatchers(antMatcher(ORDER_V1_API)).authenticated())
+                .authorizeHttpRequests(authorize -> authorize.requestMatchers(antMatcher(ORDER_V1_API)).permitAll())
                 .oauth2ResourceServer(oAuth2 -> oAuth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())));
 
         return http.build();
@@ -65,7 +67,8 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .csrf(CsrfConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(authorize -> authorize.requestMatchers(PRODUCT_V1_API).authenticated())
+                // .authorizeHttpRequests(authorize -> authorize.requestMatchers(PRODUCT_V1_API).authenticated())
+                .authorizeHttpRequests(authorize -> authorize.requestMatchers(PRODUCT_V1_API).permitAll())
                 .oauth2ResourceServer(oAuth2 -> oAuth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())));
 
         return http.build();
@@ -75,8 +78,11 @@ public class SecurityConfig {
     @Bean
     @Order(4)
     public SecurityFilterChain securityFilterChainGithubAuth(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(authorize -> authorize.requestMatchers("/login/**").permitAll()
-                .requestMatchers("/api/v1/**").authenticated())
+        // http.authorizeHttpRequests(authorize -> authorize.requestMatchers("/login/**").permitAll()
+        //         .requestMatchers("/api/v1/**").authenticated())
+        http.authorizeHttpRequests(authorize -> authorize.requestMatchers("/login/**", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
+                .requestMatchers("/api/v1/**").permitAll()
+                .anyRequest().permitAll())
                 .oauth2Login(withDefaults());
         return http.build();
     }
